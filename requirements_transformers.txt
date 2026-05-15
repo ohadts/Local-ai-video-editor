@@ -1,0 +1,18 @@
+# Transformers backend dependencies for GoPro editor
+# Install with: pip install -r requirements_transformers.txt
+
+# Core deep learning stack
+torch>=2.1
+torchvision>=0.16
+
+# Hugging Face transformers — Qwen3-VL needs >= 4.57
+transformers>=4.57.0
+qwen-vl-utils>=0.0.14
+accelerate>=0.30
+pillow
+
+# Already needed by pipeline.py
+requests
+
+# Optional — only if using --quantize-4bit (saves ~half the VRAM)
+# bitsandbytes
