@@ -1,6 +1,6 @@
-# GoPro Family Trip Editor
+# Family Trip AI Editor
 
-Automated highlight-reel pipeline for GoPro footage. A vision-language model
+Automated highlight-reel pipeline for footages. A vision-language model
 (Qwen3-VL) watches every clip, decides what's worth keeping, and FFmpeg
 stitches the result into a single video with crossfades.
 
@@ -49,7 +49,7 @@ The pipeline scans the input folder recursively for `.mp4 / .mov / .jpg / .heic`
 
 - **Photos** are sorted by file modification time (true capture order)
 - **Photo bursts** within 4 seconds are collapsed to a single representative shot
-- **Videos** use GoPro chapter+segment numbering (handles split clips correctly)
+- **Videos** use chapter+segment numbering (handles split clips correctly)
 - Pipeline-managed folders (`_chunks/`, `_ffmpeg_work/`) are excluded from the scan
 - Final order interleaves photos and videos by capture time
 
@@ -103,7 +103,7 @@ Segments are rendered in batches (default 30 per chunk) into intermediate
 
 ### Input / output (required)
 ```
---input  PATH       Folder containing GoPro footage + photos
+--input  PATH       Folder containing footages + photos
 --output PATH       Output .mp4 path
 ```
 
@@ -319,7 +319,7 @@ adjust per-segment fields:
 
 ```json
 {
-  "source_path": "D:\\users\\ohad\\Videos\\GOPRO\\...\\GH010100.MP4",
+  "source_path": "D:\\users\\ohad\\Videos\\Trip1\\...\\GH010100.MP4",
   "source_type": "video",
   "start": 30.0,
   "end": 60.0,
