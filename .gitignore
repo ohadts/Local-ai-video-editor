@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments — these get HUGE (ROCm torch is ~5GB)
+venv/
+venv-*/
+env/
+.env/
+.venv/
+
+# Pipeline outputs and working dirs
+_chunks/
+_ffmpeg_work/
+*_analysis.json
+*_analysis.json.tmp
+ffmpeg_command.sh
+ffmpeg_run.bat
+filter_complex.txt
+
+# Rendered videos
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.webm
+
+# Source media (don't commit family trips to git!)
+*.MP4
+*.MOV
+*.JPG
+*.jpg
+*.JPEG
+*.jpeg
+*.PNG
+*.png
+*.HEIC
+*.heic
+
+# Hugging Face / ML model caches
+.cache/
+*.bin
+*.safetensors
+*.gguf
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local config / secrets
+.env
+*.local
+config.local.*
