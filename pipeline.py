@@ -1362,12 +1362,24 @@ def _render_with_subdivide(chunk_segments: list, base_out: Path, chunks_dir: Pat
     if not chunk_segments:
         return []
 
-    # Build a deterministic output name based on segment count + the first seg's
-    # source path hash, so resume works even when we subdivide.
-    suffix = ""
+    # Build a deterministic output name. The earlier version used just
+    # (depth, base_stem, segment_count) — but BOTH halves of a split have the
+    # same depth and (usually) the same count, so they collided on disk: the
+    # right half overwrote the left, or got skipped by the resume check, and
+    # the concat list ended up containing the same file twice. The visible
+    # symptom is every chunk playing twice in the final output.
+    # Including an 8-char hash of the actual segment IDs guarantees the two
+    # halves get different filenames while keeping the name deterministic
+    # (so resume across runs still works).
     if depth > 0:
-        suffix = f"_d{depth}_{base_out.stem}_n{len(chunk_segments)}"
-        out_path = chunks_dir / f"chunk{suffix}.mp4"
+        import hashlib
+        seg_ids = "|".join(
+            f"{s['source_path']}:{s.get('start',0):.3f}" for s in chunk_segments
+        )
+        seg_hash = hashlib.md5(seg_ids.encode("utf-8")).hexdigest()[:8]
+        out_path = chunks_dir / (
+            f"chunk_d{depth}_{base_out.stem}_n{len(chunk_segments)}_{seg_hash}.mp4"
+        )
     else:
         out_path = base_out
 
