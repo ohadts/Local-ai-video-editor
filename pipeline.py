@@ -1493,6 +1493,15 @@ def main():
 
     input_dir   = Path(args.input).expanduser().resolve()
     output_path = Path(args.output).expanduser().resolve()
+    # Validate output extension up front — ffmpeg refuses to mux without a
+    # known container extension, and we don't want to discover that AFTER
+    # hours of analysis and rendering.
+    SUPPORTED_OUTPUT_EXTS = {".mp4", ".mov", ".mkv", ".m4v"}
+    if output_path.suffix.lower() not in SUPPORTED_OUTPUT_EXTS:
+        print(f"[ERROR] --output must end with one of {sorted(SUPPORTED_OUTPUT_EXTS)} "
+              f"(got: {output_path.name!r}).")
+        print(f"        ffmpeg cannot infer the container format without a known extension.")
+        sys.exit(1)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     cache_path  = output_path.parent / (output_path.stem + "_analysis.json")
 
